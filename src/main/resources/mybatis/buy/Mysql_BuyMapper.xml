@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rain.app.web.dao.BuyDao" >
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.rain.app.web.bean.Buy" >
+        <result column="id" property="id"/>
+        <result column="c_id" property="c_id"/>
+        <result column="s_id" property="s_id"/>
+        <result column="state" property="state"/>
+    </resultMap>
+
+    <!-- th_role_user table all fields -->
+    <sql id="Base_Column_List" >
+        id, c_id,s_id,state
+    </sql>
+
+    <insert id="addBuy" parameterType="com.rain.app.web.bean.Buy" >
+        insert into buy (id,c_id,s_id,state)
+        values (#{id},#{c_id},#{s_id},#{state});
+    </insert>
+
+    <select id="queryBuyById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List" />
+        from buy where id = #{id}
+    </select>
+    <update id="updateBuyById" parameterType="com.rain.app.web.bean.Buy" >
+        update buy set
+        <trim  suffixOverrides="," >
+            <if test="id != null and id != ''">
+                id=#{id},
+            </if>
+            <if test="state != null and state != ''">
+                state=#{state},
+            </if>
+        </trim> where id=#{id}
+    </update>
+
+    <select id="queryBuyList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List" />
+        from buy where state = #{state}
+    </select>
+
+</mapper>

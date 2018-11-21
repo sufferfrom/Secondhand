@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rain.app.web.dao.ShoppingDao" >
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.rain.app.web.bean.Shopping" >
+        <result column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="money" property="money"/>
+        <result column="c_id" property="c_id"/>
+    </resultMap>
+
+    <!-- th_role_user table all fields -->
+    <sql id="Base_Column_List" >
+        id, title,money,content,photo,c_id
+    </sql>
+
+    <insert id="addShopping" parameterType="com.rain.app.web.bean.Shopping" >
+        insert into shopping (id,title,money,content,photo,c_id)
+        values (#{id},#{title},#{money},#{content},#{photo},#{c_id});
+    </insert>
+
+    <select id="queryShoppingById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List" />
+        from shopping where id = #{id}
+    </select>
+
+
+
+    <select id="queryShoppingList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from shopping
+    </select>
+
+</mapper>
